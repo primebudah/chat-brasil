@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  swcMinify: true,
+  compiler: {
+    removeConsole: false,
+  },
+  experimental: {
+    forceSwcTransforms: true,
+  },
 };
 
 export default nextConfig;
