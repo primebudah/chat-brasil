@@ -154,6 +154,20 @@ export default function Home() {
 
     const initAuth = async () => {
       try {
+        if (typeof window !== "undefined" && window.location.hash.includes("access_token")) {
+          const hashParams = new URLSearchParams(window.location.hash.slice(1));
+          const accessToken = hashParams.get("access_token");
+          const refreshToken = hashParams.get("refresh_token");
+
+          if (accessToken && refreshToken) {
+            await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken,
+            });
+            window.history.replaceState(null, "", window.location.pathname + window.location.search);
+          }
+        }
+
         const sessionResult = await Promise.race([
           supabase.auth.getSession(),
           new Promise<null>((resolve) => setTimeout(() => resolve(null), 5000)),
