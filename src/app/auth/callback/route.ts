@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/supabase-constants";
+import { assertSupabaseConfig } from "@/lib/supabase-constants";
 
 export const dynamic = "force-dynamic";
 
@@ -12,9 +12,10 @@ export async function GET(request: Request) {
 
   if (code) {
     const cookieStore = await cookies();
+    const { url, anonKey } = assertSupabaseConfig();
     const supabase = createServerClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY,
+      url,
+      anonKey,
       {
         cookies: {
           getAll() {

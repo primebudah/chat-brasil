@@ -1,13 +1,14 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/supabase-constants";
+import { assertSupabaseConfig } from "@/lib/supabase-constants";
 
 export async function createServerSupabaseClient() {
   const cookieStore = await cookies();
+  const { url, anonKey } = assertSupabaseConfig();
 
   return createServerClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY,
+    url,
+    anonKey,
     {
       cookies: {
         getAll() {

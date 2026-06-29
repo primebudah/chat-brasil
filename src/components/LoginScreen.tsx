@@ -15,17 +15,7 @@ export default function LoginScreen() {
   const handleGoogleLogin = async () => {
     setGoogleLoading(true);
     setGoogleError("");
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-    if (error) {
-      setGoogleError(error.message);
-      setGoogleLoading(false);
-    }
+    window.location.href = "/api/auth/google";
   };
 
   const handleEmailLogin = async (e: React.FormEvent) => {

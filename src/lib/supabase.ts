@@ -1,12 +1,19 @@
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/supabase-constants";
+import { assertSupabaseConfig } from "@/lib/supabase-constants";
 
 export function createClient() {
-  return createSupabaseClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  const { url, anonKey } = assertSupabaseConfig();
+
+  return createSupabaseClient(url, anonKey, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
       detectSessionInUrl: true,
+    },
+    global: {
+      headers: {
+        apikey: anonKey,
+      },
     },
   });
 }
