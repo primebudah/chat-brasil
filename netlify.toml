@@ -1,6 +1,7 @@
 [build]
   command = "npm run build"
   publish = ".next"
+  functions = ".next/server/chunks"
 
 [build.environment]
   NEXT_PUBLIC_SUPABASE_URL = "https://hezriywwopilrjcpckio.supabase.co"
